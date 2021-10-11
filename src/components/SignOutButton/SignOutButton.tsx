@@ -13,6 +13,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#030303',
+    color: 'white',
   },
 });

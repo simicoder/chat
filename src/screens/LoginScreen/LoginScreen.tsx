@@ -33,6 +33,15 @@ export const LoginScreen = ({navigation}: Props) => {
       containerStyle: {
         marginTop: 10,
       },
+      buttonStyle: {
+        backgroundColor: '#a0a0a0',
+      },
+      titleStyle: {
+        color: 'black',
+      },
+    },
+    Input: {
+      color: 'white',
     },
   };
 
@@ -42,14 +51,14 @@ export const LoginScreen = ({navigation}: Props) => {
         <Input
           placeholder="Enter your email"
           label="Email"
-          leftIcon={{type: 'material', name: 'email'}}
+          leftIcon={{type: 'material', name: 'email', color: 'white'}}
           value={email}
           onChangeText={text => setEmail(text)}
         />
         <Input
           placeholder="Enter your password"
           label="Password"
-          leftIcon={{type: 'material', name: 'lock'}}
+          leftIcon={{type: 'material', name: 'lock', color: 'white'}}
           value={password}
           onChangeText={text => setPassword(text)}
           secureTextEntry
@@ -69,6 +78,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 10,
-    marginTop: 100,
+    marginTop: 80,
   },
 });

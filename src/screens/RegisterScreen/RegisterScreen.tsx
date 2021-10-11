@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button, ThemeProvider} from 'react-native-elements';
 import auth from '@react-native-firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {RootStackParamList} from '../../types/RootStack';
@@ -17,9 +17,8 @@ export const RegisterScreen = ({navigation}: Props) => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        // Signed in
         let user: any = userCredential.user;
-        // ...
+
         user
           .updateProfile({
             displayName: name,
@@ -47,35 +46,54 @@ export const RegisterScreen = ({navigation}: Props) => {
       });
   };
 
+  const theme = {
+    Button: {
+      containerStyle: {
+        marginTop: 10,
+      },
+      buttonStyle: {
+        backgroundColor: '#a0a0a0',
+      },
+      titleStyle: {
+        color: 'black',
+      },
+    },
+    Input: {
+      color: 'white',
+    },
+  };
+
   return (
-    <View style={styles.container}>
-      <Input
-        placeholder="Enter your name"
-        label="Name"
-        value={name}
-        onChangeText={text => setName(text)}
-      />
-      <Input
-        placeholder="Enter your email"
-        label="Email"
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <Input
-        placeholder="Enter your password"
-        label="Password"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry
-      />
-      <Input
-        placeholder="Enter your image url"
-        label="Profile Picture"
-        value={avatar}
-        onChangeText={text => setAvatar(text)}
-      />
-      <Button title="register" onPress={register} style={styles.button} />
-    </View>
+    <ThemeProvider theme={theme}>
+      <View style={styles.container}>
+        <Input
+          placeholder="Enter your name"
+          label="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+        />
+        <Input
+          placeholder="Enter your email"
+          label="Email"
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+        <Input
+          placeholder="Enter your password"
+          label="Password"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry
+        />
+        <Input
+          placeholder="Enter your image url"
+          label="Profile Picture"
+          value={avatar}
+          onChangeText={text => setAvatar(text)}
+        />
+        <Button title="register" onPress={register} style={styles.button} />
+      </View>
+    </ThemeProvider>
   );
 };
 

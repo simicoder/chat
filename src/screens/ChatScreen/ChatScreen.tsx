@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingBottom: '15%',
     paddingTop: 0,
-    backgroundColor: '#151718',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+    backgroundColor: 'black',
   },
   inputContainer: {
     width: '100%',
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: '600',
     fontSize: 20,
-    color: '#030303',
+    color: 'white',
     marginRight: 'auto',
     marginLeft: 8,
     padding: 4,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 8,
     elevation: 6,
-    backgroundColor: '#ffa600',
+    backgroundColor: '#242424',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
