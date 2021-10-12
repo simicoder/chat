@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import {Input, Button, ThemeProvider} from 'react-native-elements';
 import auth from '@react-native-firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -21,10 +21,10 @@ export const LoginScreen = ({navigation}: Props) => {
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
+          Alert.alert('Error', 'That email address is invalid!');
         }
 
-        console.error(error);
+        Alert.alert('Error', error);
       });
   };
 

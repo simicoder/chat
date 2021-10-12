@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import {Input, Button, ThemeProvider} from 'react-native-elements';
 import auth from '@react-native-firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -27,22 +27,21 @@ export const RegisterScreen = ({navigation}: Props) => {
               : 'https://gravatar.com/avatar/94d45dbdba988afacf30d916e7aaad69?s=200&d=mp&r=x',
           })
           .catch((error: Error) => {
-            console.log(error.message);
-            // alert(error.message);
+            Alert.alert('Error', error.message);
           });
 
         navigation.navigate('Home');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
+          Alert.alert('Error', 'That email address is already in use!');
         }
 
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
+          Alert.alert('Error', 'That email address is invalid!');
         }
 
-        console.error(error);
+        Alert.alert('Error', error);
       });
   };
 

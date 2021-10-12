@@ -3,18 +3,18 @@ import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const Chat = ({chat}: any) => {
-  const {owner} = chat;
+export const Message = ({message}: any) => {
+  const {owner} = message;
   const currentUser = auth()?.currentUser?.uid;
 
   return owner === currentUser ? (
-    <Sent chat={chat} />
+    <Sent message={message} />
   ) : (
-    <Received chat={chat} />
+    <Received message={message} />
   );
 };
 
-const Received = ({chat}: any) => {
+const Received = ({message}: any) => {
   const styles = StyleSheet.create({
     rowStyle: {
       margin: 0,
@@ -49,7 +49,7 @@ const Received = ({chat}: any) => {
     },
   });
 
-  const {id, imageUrl, text} = chat;
+  const {id, imageUrl, text} = message;
 
   return (
     <View style={styles.rowStyle}>
@@ -60,7 +60,7 @@ const Received = ({chat}: any) => {
   );
 };
 
-const Sent = ({chat}: any) => {
+const Sent = ({message}: any) => {
   const styles = StyleSheet.create({
     rowStyle: {
       margin: 0,
@@ -95,7 +95,7 @@ const Sent = ({chat}: any) => {
     },
   });
 
-  const {id, imageUrl, text} = chat;
+  const {id, imageUrl, text} = message;
 
   const handleDelete = async () => {
     await firestore().collection('chats').doc(id).delete();
