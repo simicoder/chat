@@ -12,7 +12,6 @@ import {
 import {Message} from '../../components/Message/Message';
 import {Input} from '../../components/Input/Input';
 import {SendButton} from '../../components/SendButton/SendButton';
-import {SignOutButton} from '../../components/SignOutButton/SignOutButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {RootStackParamList} from '../../types/RootStack';
 
@@ -57,11 +56,6 @@ export const ChatScreen = ({navigation}: Props) => {
       setLoading(false);
       Alert.alert('Chat not sent', 'Must be between 1 and 40 characters');
     }
-  };
-
-  const handleSignOut = async () => {
-    await auth().signOut();
-    navigation.navigate('Login');
   };
 
   useEffect(() => {
