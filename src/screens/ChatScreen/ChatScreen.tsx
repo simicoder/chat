@@ -97,7 +97,6 @@ export const ChatScreen = ({navigation}: Props) => {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{username}</Text>
-          <SignOutButton handleClick={handleSignOut} />
         </View>
         <View style={styles.chatStyle}>
           {chats && (
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '90%',
+    width: '100%',
     margin: 0,
     padding: 0,
     marginLeft: 'auto',
