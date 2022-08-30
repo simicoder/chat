@@ -4,15 +4,16 @@ import {StyleSheet, TextInput} from 'react-native';
 type Props = {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
+  placeholder: string;
 };
 
-export const Input = ({text, setText}: Props) => {
+export const Input = ({text, setText, placeholder}: Props) => {
   return (
     <TextInput
       value={text}
       onChangeText={setText}
       style={styles.textInput}
-      placeholder="Enter message"
+      placeholder={placeholder}
       placeholderTextColor="#595959"
     />
   );

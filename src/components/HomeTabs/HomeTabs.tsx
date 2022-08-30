@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {ChatScreen} from '../../screens/ChatScreen/ChatScreen';
+import {ChatsScreen} from '../../screens/ChatsScreen/ChatsScreen';
 import {ProfileScreen} from '../../screens/ProfileScreen/ProfileScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -30,7 +30,7 @@ export const HomeTabs = () => {
       })}>
       <Tab.Screen
         name="Chats"
-        component={ChatScreen}
+        component={ChatsScreen}
         options={{headerShown: false}}
       />
       <Tab.Screen
