@@ -101,7 +101,7 @@ export const ChatScreen = ({navigation}: Props) => {
           )}
         </View>
         <View style={styles.inputContainer}>
-          <Input text={text} setText={setText} />
+          <Input text={text} setText={setText} placeholder="Enter message" />
           <SendButton handleChat={sendMessage} />
         </View>
       </View>

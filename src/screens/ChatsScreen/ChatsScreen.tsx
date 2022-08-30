@@ -8,25 +8,24 @@ import {
   Alert,
   ActivityIndicator,
   FlatList,
+  Modal,
 } from 'react-native';
-import {Message} from '../../components/Message/Message';
 import {Input} from '../../components/Input/Input';
 import {SendButton} from '../../components/SendButton/SendButton';
-import {SignOutButton} from '../../components/SignOutButton/SignOutButton';
+import {ChatListItem} from '../../components/ChatListItem/ChatListItem';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {RootStackParamList} from '../../types/RootStack';
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 
-export const ChatScreen = ({navigation}: Props) => {
+export const ChatsScreen = ({navigation}: Props) => {
   const [text, setText] = useState('');
   const [chats, setChats] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const timestamp = firestore.FieldValue.serverTimestamp();
+  const {uid, photoURL} = auth().currentUser as FirebaseAuthTypes.User;
 
   const sendMessage = async (e: React.SyntheticEvent) => {
-    const {uid, photoURL} = auth().currentUser as FirebaseAuthTypes.User;
-
     if (text.length > 1 && text.length < 40) {
       try {
         e.preventDefault();
@@ -59,22 +58,20 @@ export const ChatScreen = ({navigation}: Props) => {
     }
   };
 
-  const handleSignOut = async () => {
-    await auth().signOut();
-    navigation.navigate('Login');
-  };
-
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('chats')
-      .orderBy('createdAt', 'asc')
+      .where('person1', '==', uid)
+      .where('person2', '==', uid)
       .limitToLast(15)
       .onSnapshot(querySnapshot => {
         const chatsArr: any = [];
         querySnapshot.forEach(doc => {
           const id = doc.id;
           const data = doc.data();
-          chatsArr.push({id, ...data});
+          if (chatsArr) {
+            chatsArr.push({id, ...data});
+          }
         });
         setChats(chatsArr);
         setLoading(false);
@@ -84,32 +81,27 @@ export const ChatScreen = ({navigation}: Props) => {
       unsubscribe();
       setLoading(false);
     };
-  }, []);
+  }, [uid]);
 
   if (loading) {
     return <ActivityIndicator />;
   } else {
-    const username: string | null = auth().currentUser
-      ? (auth()?.currentUser?.displayName as string)
-      : null;
-
     return (
       <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{username}</Text>
-          <SignOutButton handleClick={handleSignOut} />
+        <View style={styles.topContainer}>
+          <View style={styles.inputContainer}>
+            <Input text={text} setText={setText} placeholder="Search" />
+          </View>
         </View>
         <View style={styles.chatStyle}>
           {chats && (
             <FlatList
               data={chats}
-              renderItem={({item}) => <Message key={item.id} message={item} />}
+              renderItem={({item}) => (
+                <ChatListItem key={item.id} chat={item} />
+              )}
             />
           )}
-        </View>
-        <View style={styles.inputContainer}>
-          <Input text={text} setText={setText} />
-          <SendButton handleChat={sendMessage} />
         </View>
       </View>
     );
@@ -130,11 +122,8 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     margin: 0,
-    marginTop: 0,
-    marginBottom: 0,
     padding: 0,
     paddingBottom: '15%',
-    paddingTop: 0,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'black',
@@ -149,7 +138,6 @@ const styles = StyleSheet.create({
     right: 0,
     margin: 0,
     padding: 0,
-    paddingBottom: 0,
     backgroundColor: '#151718',
     alignItems: 'center',
     justifyContent: 'center',
@@ -167,12 +155,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     padding: 4,
   },
-  textContainer: {
+  topContainer: {
     flexDirection: 'row',
     height: 60,
     width: '100%',
     margin: 0,
-    padding: 8,
     elevation: 6,
     backgroundColor: '#242424',
     alignItems: 'center',
